@@ -1,0 +1,26 @@
+# Ignore all node_modules directories
+# These directories contain dependencies installed via npm, which are not needed in the Docker image because dependencies should be installed during the Docker build process.
+**/node_modules/
+
+# Ignore npm debug log files
+# These files are generated when npm encounters errors and are not needed in the Docker image because they are only useful for local debugging.
+npm-debug.log
+
+# Ignore build artifacts
+# These directories contain build outputs, which are not needed in the Docker image because the build process should be handled within the Dockerfile.
+**/dist
+**/build
+
+# Ignore test and coverage directories
+# These directories contain test files and coverage reports, which are not needed in the Docker image because tests should be run in the development environment, not in production.
+test
+.coverage
+.coverage.*
+
+# Ignore local environment files
+# These files contain sensitive information and environment-specific configurations that should not be included in the Docker image to avoid exposing sensitive data.
+.env
+
+# Ignore Git repository files
+# These files are related to version control and are not needed in the Docker image because they do not affect the running application.
+.git

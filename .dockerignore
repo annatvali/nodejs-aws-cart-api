@@ -24,3 +24,8 @@ test
 # Ignore Git repository files
 # These files are related to version control and are not needed in the Docker image because they do not affect the running application.
 .git
+
+# Ignore IDE and editor directories
+# These directories contain IDE-specific settings and are not needed in the Docker image.
+.vscode/
+.idea/

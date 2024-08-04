@@ -10,11 +10,14 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
+# Install Nest CLI globally
+RUN npm install -g @nestjs/cli
+
 # Copy the rest of the application source code
 COPY . .
 
-# Build the application
-RUN npm run build
+# Build the application using Nest CLI
+RUN nest build
 
 # Stage 2: Create the production image
 FROM node:20-alpine
@@ -22,13 +25,15 @@ FROM node:20-alpine
 # Set working directory
 WORKDIR /app
 
-# Copy only build output and node_modules from the builder stage
+# Copy only the compiled output and package.json from the builder stage
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
+
+# Install only production dependencies
+RUN npm install --only=production
 
 # Expose the application port
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "start"]
+CMD ["node", "dist/main.js"]

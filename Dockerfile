@@ -10,9 +10,6 @@ COPY package*.json ./
 # Install dependencies
 RUN npm install
 
-# Install Nest CLI globally
-RUN npm install -g @nestjs/cli
-
 # Copy the rest of the application source code
 COPY . .
 
@@ -23,7 +20,7 @@ RUN nest build
 FROM node:20-alpine
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src/app
 
 # Copy only the compiled output and package.json from the builder stage
 COPY --from=builder /app/dist ./dist
@@ -33,7 +30,7 @@ COPY --from=builder /app/package*.json ./
 RUN npm install --only=production
 
 # Expose the application port
-EXPOSE 3000
+EXPOSE 4000
 
 # Start the application
 CMD ["node", "dist/main.js"]
